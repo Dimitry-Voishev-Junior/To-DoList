@@ -21,6 +21,8 @@ export class TaskService {
   }
 
   addTask(task: Task) {
+    task.id = this.tasks.length + 1;
+
     this.tasks.push(task);
 
     this.saveToLocalStorage();
@@ -43,7 +45,7 @@ export class TaskService {
   private saveToLocalStorage() {
     const tasksJSON = JSON.stringify(this.tasks);
 
-    localStorage.setItem("taks", tasksJSON);
+    localStorage.setItem("tasks", tasksJSON);
   }
 
   private getFromLocalStorage(): Array<Task> {
