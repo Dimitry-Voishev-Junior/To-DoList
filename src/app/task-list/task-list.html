@@ -4,19 +4,25 @@
     <h2>A Fazer</h2>
     <ul>
         @for (task of tasks; track task.id) {
-            <li>
-                <input type="checkbox" (change)="updateTasks()" [(ngModel)]="task.completed" name="completed">
-                <a [routerLink]="['/taskDetails', task.id]" [ngClass]="task.completed ? 'task-completed' : '' ">{{task.name}}</a>
-                <div class="button-box">
-                    <button (click)="removeTask(task)">x</button>
-                </div>
-            </li>
+        <li>
+            <span class="material-symbols-rounded checkbox-icon" (click)="task.completed = !task.completed; updateTasks()"> {{ task.completed ? 'check_box' : 'check_box_outline_blank' }}</span>
+            <a [routerLink]="['/taskDetails', task.id]" [ngClass]="task.completed ? 'task-completed' : ''">{{ task.name }}</a>
+
+            <div class="button-box">
+                <button (click)="removeTask(task)" class="icon-button">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+            
+        </li>
         }
     </ul>
 
     <form (ngSubmit)="addTask()" #taskForm="ngForm">
         <input type="text" [(ngModel)]="newTask.name" name="newTask" placeholder="Adicionar Tarefa" required>
 
-        <button type="submit" [disabled]="!taskForm.form.valid">+</button>
+        <button type="submit" [disabled]="!taskForm.form.valid">
+            <span class="material-symbols-outlined">add</span>
+        </button>
     </form>
 </main>
