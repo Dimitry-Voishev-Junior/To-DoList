@@ -1,0 +1,58 @@
+import { Injectable } from '@angular/core';
+import { Task } from '../models/task';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class TaskService {
+  
+  private tasks: Array<Task> = [];
+
+  getTasks(): Array<Task> {
+    this.tasks = this.getFromLocalStorage();
+
+    return this.tasks
+  }
+
+  getById(id: number): Task | undefined {
+    const task = this.tasks.find(c => c.id === id);
+
+    return task;
+  }
+
+  addTask(task: Task) {
+    this.tasks.push(task);
+
+    this.saveToLocalStorage();
+  }
+
+  updateTasks() {
+    this.saveToLocalStorage();
+  }
+
+  removeTask(task: Task) {
+    const index = this.tasks.indexOf(task);
+
+    if (index != -1) {
+      this.tasks.splice(index, 1);
+
+      this.saveToLocalStorage();
+    }
+  }
+
+  private saveToLocalStorage() {
+    const tasksJSON = JSON.stringify(this.tasks);
+
+    localStorage.setItem("taks", tasksJSON);
+  }
+
+  private getFromLocalStorage(): Array<Task> {
+    const tasksJson = localStorage.getItem("tasks");
+
+    if (!tasksJson) {
+      return new Array<Task>();
+    }
+
+    return JSON.parse(tasksJson);
+  }
+}
