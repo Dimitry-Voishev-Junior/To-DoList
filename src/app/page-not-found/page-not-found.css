@@ -1,0 +1,12 @@
+:host {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 57px)
+}
+
+h2,span {
+    color: var(--color-white);
+    font-size: var(--font-size-2);
+}
